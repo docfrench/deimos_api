@@ -86,7 +86,7 @@ jobs:
       - name: Run new container
         run: |
           docker run -d \
-            --name deimos-api \
+            --name deimos_api \
             --network br0 \
             --ip 192.168.0.2 \
             --env-file /tmp/deimos-deploy.env \

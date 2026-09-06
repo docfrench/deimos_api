@@ -12,7 +12,7 @@ Tech stack for the API
 - FastAPI
 - Docker for containerization
 - Deployment through Github Actions CI/CD
-- Currently leverages a locally hosted runner to automatically deploy.
+- Currently leverages a locally hosted Github runner to automatically deploy.
 
 The website
 - nginx container for the website
