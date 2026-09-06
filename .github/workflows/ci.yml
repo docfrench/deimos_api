@@ -88,6 +88,7 @@ jobs:
           docker run -d \
             --name deimos_api \
             --network br0 \
+            -v /mnt/user/appdata/fastapi-deimos:/data \
             --ip 192.168.0.2 \
             --env-file /tmp/deimos-deploy.env \
             ghcr.io/${{ github.repository_owner }}/deimos-api:${{ github.sha }} 
