@@ -81,7 +81,7 @@ jobs:
           EOF
 
       - name: Stop and remove old container
-        run: docker rm -f deimos-api || true
+        run: docker rm -f deimos_api || true
 
       - name: Run new container
         run: |
