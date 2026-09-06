@@ -61,9 +61,41 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/deimos-api:latest
 
 
+  deploy:
+    runs-on: self-hosted
+    needs: build-and-push
+    if: github.ref == 'refs/heads/main'
 
+    steps:
+      - name: Pull latest image
+        run: docker pull ghcr.io/${{ github.repository_owner }}/deimos-api:${{ github.sha }}
 
+      - name: Write .env file
+        run: |
+          cat <<EOF > /tmp/deimos-deploy.env
+          JELLYFIN_URL=${{ vars.JELLYFIN_URL }}
+          JELLYFIN_API_KEY=${{ secrets.JELLYFIN_API_KEY }}
+          BOOKORBIT_URL=${{ vars.BOOKORBIT_URL }}
+          BOOKORBIT_USERNAME=${{ secrets.BOOKORBIT_USERNAME }}
+          BOOKORBIT_PASSWORD=${{ secrets.BOOKORBIT_PASSWORD }}
+          EOF
 
+      - name: Stop and remove old container
+        run: docker rm -f deimos-api || true
+
+      - name: Run new container
+        run: |
+          docker run -d \
+            --name deimos-api \
+            --restart unless-stopped \
+            -p 8000:8000 \
+            --env-file /tmp/deimos-deploy.env \
+            ghcr.io/${{ github.repository_owner }}/deimos-api:${{ github.sha }} 
+            
+      
+      - name: Remove .env
+        if: always()
+        run: rm -f /tmp/deimos-deploy.env
 
 
 
