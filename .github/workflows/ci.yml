@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pytest
+        run: python -m pytest
+        env:
+          JELLYFIN_URL: ${{ vars.JELLYFIN_URL }}
+          JELLYFIN_API_KEY: ${{ secrets.JELLYFIN_API_KEY }}
+          BOOKORBIT_URL: ${{ vars.BOOKORBIT_URL }}
+          BOOKORBIT_USERNAME: ${{ secrets.BOOKORBIT_USERNAME }}
+          BOOKORBIT_PASSWORD: ${{ secrets.BOOKORBIT_PASSWORD }}

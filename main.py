@@ -1,8 +1,5 @@
 from dotenv import load_dotenv
 import os
-
-load_dotenv()
-
 from fastapi import FastAPI, Query, APIRouter, HTTPException
 import httpx
 from typing import Optional
@@ -11,7 +8,15 @@ import vampire
 import weigh_heart
 import ifdb
 
+load_dotenv()
+
 app = FastAPI()
+
+#Health check
+
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
 
 app.include_router(ifdb.router)
 app.include_router(vampire.router)
@@ -33,6 +38,7 @@ COLLECTION_TYPE_TO_ITEM = {
     "books": "Book",
     "homevideos": "Video",
 }
+
 
 @router.get("/status")
 async def jellyfin_status():
