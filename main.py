@@ -12,7 +12,7 @@ import weigh_heart
 
 load_dotenv()
 
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
 
 # Anything an upstream can do to us: network errors, bad status, bad JSON, unexpected shape
 UPSTREAM_ERRORS = (httpx.HTTPError, ValueError, KeyError, TypeError, AttributeError)
