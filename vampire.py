@@ -1,16 +1,22 @@
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
 import sqlite3
+from contextlib import contextmanager
 
 router = APIRouter(prefix="/api/vampire", tags=["vampire"])
 
 DB_PATH = "/data/vampire_england_db.sqlite"
- 
-def get_db():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn
 
+
+@contextmanager
+def db_conn(ro: bool = False):
+    uri = f"file:{DB_PATH}?mode=ro" if ro else f"file:{DB_PATH}"
+    conn = sqlite3.connect(uri, uri=True, timeout=5)
+    conn.row_factory = sqlite3.Row
+    try:
+        yield conn
+    finally:
+        conn.close()
 
 
 @router.get("/scoreboard") 
