@@ -21,7 +21,7 @@ def db_conn(ro: bool = False):
 
 @router.get("/scoreboard") 
 def get_scoreboard(player: Optional[str] = Query(None),):
-    db = get_db()
+    db = db_conn()
     characters = db.execute("SELECT * FROM characters WHERE active = 1").fetchall()
     result = []
     for c in characters:
@@ -48,7 +48,7 @@ def get_scoreboard(player: Optional[str] = Query(None),):
 
 @router.get("/players/{name}")
 def get_pc(name: str):
-    db = get_db()
+    db = db_conn()
     characters = db.execute(
         "SELECT * FROM characters WHERE player_name = ?", (name,)
     ).fetchall()
@@ -98,7 +98,7 @@ def get_pc(name: str):
 
 @router.get("/sessionlog")
 def get_session_log():
-    db = get_db()
+    db = db_conn()
     sessions = db.execute("SELECT * FROM session_log ORDER BY date DESC").fetchall()
     result = [{"date": s["date"], "summary": s["summary"]} for s in sessions]
     db.close()
@@ -107,7 +107,7 @@ def get_session_log():
 
 @router.get("/denizens")
 def get_denizens():
-    db = get_db()
+    db = db_conn()
     rows = db.execute(
         "SELECT * FROM denizens WHERE met = 1 ORDER BY category, faction, name"
     ).fetchall()
@@ -122,7 +122,7 @@ def get_denizens():
 
 @router.get("/denizens-test")
 def get_denizens_test():
-    db = get_db()
+    db = db_conn()
     rows = db.execute(
         "SELECT * FROM denizens ORDER BY category, faction, name"
     ).fetchall()
@@ -138,7 +138,7 @@ def get_denizens_test():
 
 @router.get("/clocks")
 def get_clocks():
-    db = get_db()
+    db = db_conn()
     rows = db.execute(
         "SELECT * FROM clocks WHERE active = 1 ORDER BY name"
     ).fetchall()
