@@ -4,3 +4,4 @@ httpx
 httpx2
 python-dotenv
 pytest
+prometheus_fastapi_instrumentator
