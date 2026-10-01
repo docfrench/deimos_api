@@ -1,5 +1,4 @@
 import sqlite3
-
 from contextlib import contextmanager
 
 from fastapi import APIRouter, HTTPException, Query
