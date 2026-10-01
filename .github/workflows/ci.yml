@@ -87,7 +87,7 @@ jobs:
           BOOKORBIT_URL: '${{ vars.BOOKORBIT_URL }}'
           BOOKORBIT_USERNAME: '${{ secrets.BOOKORBIT_USERNAME }}'
           BOOKORBIT_PASSWORD: '${{ secrets.BOOKORBIT_PASSWORD }}'
-        run: >
+        run: |
           set -euo pipefail
 
 
@@ -133,23 +133,3 @@ jobs:
             fi
             exit 1
           fi
-      - name: Stop and remove old container
-        run: docker rm -f deimos_api || true
-      - name: Run new container
-        env:
-          API_IP: '${{ vars.API_IP }}'
-          JELLYFIN_URL: '${{ vars.JELLYFIN_URL }}'
-          JELLYFIN_API_KEY: '${{ secrets.JELLYFIN_API_KEY }}'
-          BOOKORBIT_URL: '${{ vars.BOOKORBIT_URL }}'
-          BOOKORBIT_USERNAME: '${{ secrets.BOOKORBIT_USERNAME }}'
-          BOOKORBIT_PASSWORD: '${{ secrets.BOOKORBIT_PASSWORD }}'
-        run: |
-          docker run -d \
-            --name deimos_api \
-            --network br0 \
-            --restart unless-stopped \
-            -v /mnt/user/appdata/fastapi-deimos:/data \
-            --ip ${{ vars.API_IP }} \
-            ghcr.io/${{ github.repository_owner }}/deimos-api:${{ github.sha }} 
-            
-
