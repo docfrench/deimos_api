@@ -22,6 +22,7 @@ FastAPI backend for my personal homelab website: media-library stats, a playable
 All persistent data lives in SQLite databases.
 
 
+
 ### Architecture
 
 ```mermaid
