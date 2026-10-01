@@ -10,7 +10,6 @@
 
 FastAPI backend for my personal homelab website: media-library stats, a playable interactive-fiction catalog, a zero-login AI-vs-human fiction game, and live data for a tabletop RPG campaign site.
 
-
 ### Features:
 
 | Module | What it does | Route prefix |
@@ -21,7 +20,6 @@ FastAPI backend for my personal homelab website: media-library stats, a playable
 | Campaign | Live data for a tabletop RPG campaign website | `/api/vampire` |
  
 All persistent data lives in SQLite databases.
-
 
 
 ### Architecture
