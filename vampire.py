@@ -1,7 +1,7 @@
-from fastapi import APIRouter, HTTPException, Query
-from typing import Optional
 import sqlite3
 from contextlib import contextmanager
+
+from fastapi import APIRouter, HTTPException, Query
 
 router = APIRouter(prefix="/api/vampire", tags=["vampire"])
 
@@ -20,7 +20,7 @@ def db_conn(ro: bool = False):
 
 
 @router.get("/scoreboard")
-def get_scoreboard(player: Optional[str] = Query(None),):
+def get_scoreboard(player: str | None = Query(None),):
     with db_conn(ro=True) as db:
         characters = db.execute("SELECT * FROM characters WHERE active = 1").fetchall()
         result = []

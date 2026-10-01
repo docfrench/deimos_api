@@ -1,10 +1,11 @@
 import asyncio
 import os
 import time
-from prometheus_fastapi_instrumentator import Instrumentator
+
 import httpx
 from dotenv import load_dotenv
 from fastapi import APIRouter, FastAPI, HTTPException
+from prometheus_fastapi_instrumentator import Instrumentator
 
 import ifdb
 import vampire

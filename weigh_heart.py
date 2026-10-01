@@ -1,8 +1,8 @@
-import uuid
-from fastapi import APIRouter, Request, Response, Query
-from typing import Optional
-from pydantic import BaseModel
 import sqlite3
+import uuid
+
+from fastapi import APIRouter, Request, Response
+from pydantic import BaseModel
 
 router = APIRouter(prefix="/api/weighheart", tags=["weighheart"])
  

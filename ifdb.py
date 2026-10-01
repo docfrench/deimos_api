@@ -1,8 +1,6 @@
-from fastapi import FastAPI, Query
-import httpx
-from fastapi import APIRouter, HTTPException
-from typing import Optional
 import sqlite3
+
+from fastapi import APIRouter, Query
 
 router = APIRouter(prefix="/api/ifdb", tags=["ifdb"])
 
@@ -15,7 +13,7 @@ def get_db():
 
 
 @router.get("/entries") 
-def list_entries(author: Optional[str] = Query(None), system: Optional[str] = Query(None)):
+def list_entries(author: str | None = Query(None), system: str | None = Query(None)):
     conn = get_db()
  
     query = """
