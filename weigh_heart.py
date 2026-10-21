@@ -68,7 +68,7 @@ def submit_guess(payload: GuessPayload, request: Request):
     db = get_db()
     try:
         story = db.execute(
-            "SELECT ai_flag FROM stories WHERE id = ?", (payload.story_id,)
+            "SELECT title, author, ai_flag, ai_id FROM stories WHERE id = ?", (payload.story_id,)
         ).fetchone()
 
         if story is None:
@@ -86,7 +86,13 @@ def submit_guess(payload: GuessPayload, request: Request):
         )
         db.commit()
 
-        return {"correct": correct, "actual_ai": actual_ai}
+        return {
+            "correct": correct, 
+            "actual_ai": actual_ai,
+            "title": story["title"],
+            "author": story["author"],
+            "ai_id": story["ai_id"],
+        }
     finally:
         db.close()
 
